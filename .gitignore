@@ -1,0 +1,39 @@
+# Build artifacts
+build/
+cmake-build-*/
+*.o
+*.a
+*.so
+*.dylib
+*.out
+*.exe
+*.bin
+*.iso
+*.img
+
+# IDEs
+.idea/
+.vscode/
+
+# System files
+*.swp
+*~
+.DS_Store
+
+# Dependencies
+deps/
+third_party/
+
+# Emulation/QEMU
+*.qcow2
+*.vmdk
+qemu_log.txt
+serial.log
+
+# Cross-compilers
+x86_64-elf-*/
+i686-elf-*/
+
+# Logs/temporary
+*.log
+*.tmp
