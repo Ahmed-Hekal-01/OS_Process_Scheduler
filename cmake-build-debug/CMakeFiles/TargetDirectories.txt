@@ -1,0 +1,3 @@
+/home/hekal/CLionProjects/OS_project/cmake-build-debug/CMakeFiles/OS_project.dir
+/home/hekal/CLionProjects/OS_project/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/hekal/CLionProjects/OS_project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
