@@ -11,9 +11,8 @@ struct Process {
     int priority;
     int burstTime;
 };
-
-vector<Process> generateProcesses(int n = 5) {
-    vector<Process> processes;
+vector<Process> processes;
+void generateProcesses(int n = 5) {
     int arrivalTime = 0;
     srand(time(0));
 
@@ -31,12 +30,9 @@ vector<Process> generateProcesses(int n = 5) {
 
         processes.push_back(p);
     }
-
-    return processes;
 }
 
-
-void printProcesses(const vector<Process>& processes) {
+void printProcesses() {
     cout << "P\tAr\tPr\tBu\n";
     for (const auto& p : processes) {
         cout << p.ID << "\t" << p.arrivalTime << "\t"
