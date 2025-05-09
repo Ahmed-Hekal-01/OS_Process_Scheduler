@@ -13,6 +13,7 @@ struct Process {
     int time_remaining;
 };
 vector<Process> processes;
+vector<pair<string, int>> ganttChart;  // {ProcessID, EndTime}
 void GenerateProcesses(int n = 5) {
     int arrivalTime = 0;
     srand(time(0));
@@ -32,13 +33,33 @@ void GenerateProcesses(int n = 5) {
         processes.push_back(p);
     }
 }
-
-void PrintProcesses() {
+vector<pair<string, int>> resolveRR(vector<Process>& group, int timeQuantum = 2 , int lastTimeStamp){
+    // Emad -> Implement here
+}
+vector<pair<string, int>> schedulePriorityRR(){
+    // hekal -> Implement here
+}
+double AvgWaitTime() {
+    // Shaboury&Reem -> Implement here
+}
+double AvgTurnaroundTime() {
+    // Shaboury&Reem -> Implement here
+}
+double AvgResponseTime() {
+    // Shaboury&Reem -> Implement here
+}
+string GanttChart(const vector<pair<string, int>>& schedule) {
+    // Omar_salah -> Implement here
+}
+void PintProcesses() {
     cout << "P\tAr\tPr\tBu\n";
     for (const auto& p : processes) {
         cout << p.ID << "\t" << p.arrivalTime << "\t"
              << p.priority << "\t" << p.burstTime << "\n";
     }
+}
+void GUI() {
+    // Shaboury&Reem -> Implement here
 }
 
 int main() {
