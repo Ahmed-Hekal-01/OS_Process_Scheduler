@@ -153,18 +153,9 @@ void GUI() {
 }
 bool supportsANSIColors() {
 #ifdef _WIN32
-    // Windows-specific console color support
-    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    if (hOut == INVALID_HANDLE_VALUE) return false;
-
-    DWORD dwMode = 0;
-    if (!GetConsoleMode(hOut, &dwMode)) return false;
-
-    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-    return SetConsoleMode(hOut, dwMode);
+    return false; // disable on Windows
 #else
-    // Assume ANSI support for Linux/macOS
-    return isatty(fileno(stdout));
+    return  true;  // enable on Unix
 #endif
 }
 
