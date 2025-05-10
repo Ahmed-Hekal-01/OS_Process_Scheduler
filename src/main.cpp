@@ -1,4 +1,5 @@
 #include <climits>
+#include <unistd.h>
 
 #include "schedulerServices.h"
 vector<pair<string, int>> resolveRR(const Process &p1, const Process &p2, int lastTimeStamp, int timeQuantum = 2) {
@@ -101,7 +102,7 @@ double AvgResponseTime() {
     // Shaboury&Reem -> Implement here
     return{};
 }
-string GanttChart(const vector<pair<string, int>>& schedule , int FirstArrivalTime = 0 ) {
+string GanttChart(const vector<pair<string, int>>& schedule ,bool enableColors, int FirstArrivalTime = 0 ) {
     if (schedule.empty()) return "No processes scheduled\n";
 
     map<string, string> colors = {
@@ -123,7 +124,9 @@ string GanttChart(const vector<pair<string, int>>& schedule , int FirstArrivalTi
 
     for (const auto& [process, endTime] : schedule) {
         int duration = endTime - prevTime;
-        string color = colors.count(process) ? colors[process] : "";
+        string color = (enableColors && colors.count(process)) ? colors[process] : "";
+        string reset = enableColors ? RESET : "";
+
 
         // Chart line (with process name centered)
         string space = string(duration, ' ');
@@ -148,12 +151,30 @@ string GanttChart(const vector<pair<string, int>>& schedule , int FirstArrivalTi
 void GUI() {
     // Shaboury&Reem -> Implement here
 }
+bool supportsANSIColors() {
+#ifdef _WIN32
+    // Windows-specific console color support
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    if (hOut == INVALID_HANDLE_VALUE) return false;
+
+    DWORD dwMode = 0;
+    if (!GetConsoleMode(hOut, &dwMode)) return false;
+
+    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+    return SetConsoleMode(hOut, dwMode);
+#else
+    // Assume ANSI support for Linux/macOS
+    return isatty(fileno(stdout));
+#endif
+}
 
 int main() {
+    bool enableColors = supportsANSIColors();
+
     vector<Process> processes = GenerateProcesses();
     PrintProcesses(processes);
     vector<pair<string, int>> Schedulled = schedulePriorityRR(processes);
     int FirstArrivalTime = processes[0].arrivalTime;
-    cout << GanttChart(Schedulled , FirstArrivalTime) << endl;
+    cout << GanttChart(Schedulled , enableColors,  FirstArrivalTime) << endl;
 
 }

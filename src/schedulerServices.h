@@ -14,6 +14,10 @@
 #include<queue>
 #include <bits/ranges_algo.h>
 using namespace std;
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 struct Process {
     string ID;
     int arrivalTime;
