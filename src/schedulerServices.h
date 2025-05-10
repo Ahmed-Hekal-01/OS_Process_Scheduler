@@ -46,4 +46,12 @@ void PintProcesses() {
              << p.priority << "\t" << p.burstTime << "\n";
     }
 }
+
+
+    vector<Process> processesTest = {
+        {"P3", 6, 3,4},
+        {"P4", 8, 3,5}
+    };
+    auto unittestresolveRR=processesTest;
+
 #endif //SCHEDULERSERVICES_H
