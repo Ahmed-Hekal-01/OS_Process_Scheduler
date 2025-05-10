@@ -5,6 +5,8 @@ CMakeFiles
 CMakeLists.txt
 CMakeCache.txt
 Makefile
+cmake_install.cmake
+cmake-build-debug
 *.o
 *.a
 *.so
