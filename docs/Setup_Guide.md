@@ -20,6 +20,10 @@
 D:
 git clone https://github.com/Ahmed-Hekal-01/OS_Project.git
 ```
+## How To Run 
+```
+./OS_Project
+```
 - **Note** : *now the project is the " D " you can open it using clion or vscode* 
 ### To Configure Git
 ```sh
