@@ -7,7 +7,7 @@
 #include"ProcessServices.h"
 #include"MetricsServices.h"
 #include "schedulerServices.h"
-string GanttChart(const vector<pair<string, int>>& schedule ,bool enableColors, int FirstArrivalTime = 0 ) {
+string GanttChart(const vector<pair<string, int>>& schedule , int FirstArrivalTime = 0 ) {
     if (schedule.empty()) return "No processes scheduled\n";
 
     map<string, string> colors = {
@@ -30,8 +30,7 @@ string GanttChart(const vector<pair<string, int>>& schedule ,bool enableColors, 
     for (const auto& [process, endTime] : schedule) {
         int duration = endTime - prevTime;
         string color = (colors.count(process)) ? colors[process] : "";
-        string reset = enableColors ? RESET : "";
-
+        string reset = "";
 
         // Chart line (with process name centered)
         string space = string(duration, ' ');
