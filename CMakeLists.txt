@@ -4,5 +4,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(
         OS_project src/main.cpp
-         src/schedulerServices.h
+        include/schedulerServices.h
+        include/MetricsServices.h
+        include/ProcessServices.h
+        include/GUI.h
 )

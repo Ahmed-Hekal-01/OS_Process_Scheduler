@@ -1,20 +1,11 @@
 //
-// Created by hekal on 5/10/25.
+// Created by hekal on 5/11/25.
 //
-#ifndef SCHEDULERSERVICES_H
-#define SCHEDULERSERVICES_H
-#include <algorithm>
-#include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <string>
-#include <map>
-#include <set>
-#include<queue>
-#include <bits/ranges_algo.h>
-using namespace std;
 
+#ifndef PROCESSSERVICE_H
+#define PROCESSSERVICE_H
+#include "bits/stdc++.h"
+using namespace std;
 struct Process {
     string ID;
     int arrivalTime;
@@ -78,13 +69,4 @@ void PrintProcesses(vector<Process> processes) {
              << p.priority << "\t" << p.burstTime << "\n";
     }
 }
-
-
-    vector<Process> processesTest = {
-        {"P3", 6, 3,4},
-        {"P4", 8, 3,5},
-            {"p1"}
-    };
-    auto unittestresolveRR= processesTest;
-
-#endif //SCHEDULERSERVICES_H
+#endif
