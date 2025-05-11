@@ -87,21 +87,60 @@ vector<pair<string, int>> schedulePriorityRR(vector<Process> processes) {
 
     return ganttChart;
 }
-
-
-
+vector<Process> globalProcesses;
+vector<pair<string, int>> globalSchedule;
 double AvgWaitTime() {
-    // Shaboury&Reem -> Implement here
-    return {};
+    map<string, int> lastExecution;
+    map<string, int> executedCount;
+
+    for (auto& [id, time] : globalSchedule) {
+        lastExecution[id] = time;
+        executedCount[id]++;
+    }
+
+    map<string, int> waitTime;
+    for (auto& p : globalProcesses) {
+        int turnaround = lastExecution[p.ID] - p.arrivalTime;
+        waitTime[p.ID] = turnaround - p.burstTime;
+    }
+
+    double total = 0;
+    for (auto& [_, wait] : waitTime)
+        total += wait;
+
+    return total / globalProcesses.size();
 }
+
 double AvgTurnaroundTime() {
-    // Shaboury&Reem -> Implement here
-    return{};
+    map<string, int> lastExecution;
+
+    for (auto& [id, time] : globalSchedule)
+        lastExecution[id] = time;
+
+    double total = 0;
+    for (auto& p : globalProcesses) {
+        int turnaround = lastExecution[p.ID] - p.arrivalTime;
+        total += turnaround;
+    }
+
+    return total / globalProcesses.size();
 }
+
 double AvgResponseTime() {
-    // Shaboury&Reem -> Implement here
-    return{};
+    map<string, int> firstExecution;
+
+    for (auto& [id, time] : globalSchedule)
+        if (!firstExecution.count(id))
+            firstExecution[id] = time;
+
+    double total = 0;
+    for (auto& p : globalProcesses) {
+        total += firstExecution[p.ID] - p.arrivalTime;
+    }
+
+    return total / globalProcesses.size();
 }
+
 string GanttChart(const vector<pair<string, int>>& schedule ,bool enableColors, int FirstArrivalTime = 0 ) {
     if (schedule.empty()) return "No processes scheduled\n";
 
@@ -161,11 +200,15 @@ bool supportsANSIColors() {
 
 int main() {
     bool enableColors = supportsANSIColors();
-
     vector<Process> processes = GenerateProcesses();
     PrintProcesses(processes);
     vector<pair<string, int>> Schedulled = schedulePriorityRR(processes);
+    globalProcesses = processes;
+    globalSchedule = Schedulled;
     int FirstArrivalTime = processes[0].arrivalTime;
     cout << GanttChart(Schedulled , enableColors,  FirstArrivalTime) << endl;
+    cout << "Average Waiting Time: " << AvgWaitTime() << endl;
+    cout << "Average Turnaround Time: " << AvgTurnaroundTime() << endl;
+    cout << "Average Response Time: " << AvgResponseTime() << endl;
 
 }
