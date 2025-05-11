@@ -8,65 +8,69 @@
 using namespace std;
 struct Process {
     string ID;
-    int arrivalTime;
-    int priority;
-    int burstTime;
-    int time_remaining;
+    int arrivalTime{};
+    int priority{};
+    int burstTime{};
+    int time_remaining{};
     bool operator==(const Process& other) const {
-        return ID == other.ID;  // Compare processes by their ID
+        return ID == other.ID;
     }
 };
-//
-// vector<pair<string, int>> ganttChart;// {ProcessID, EndTime}
-  vector<Process> GenerateProcesses(int n = 5) {
-    vector<Process> processes;
-    if (n < 3) n = 3;  // Minimum 3 processes for 2 priorities
-    srand(time(0));
-    processes.clear();  // Clear existing processes
 
-    // Create guaranteed priority pairs
+inline vector<Process> GenerateProcesses(int n = 5) {
+    vector<Process> processes;
+    if (n < 3) n = 3;
+
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> arrivalDist(0, 5);
+    uniform_int_distribution<> burstDist(1, 5);
+    uniform_int_distribution<> closeArrival(0, 1);
+    uniform_int_distribution<> priorityDist(1, 3);
+
+    processes.clear();
+
     for (int priority = 1; priority <= 3; priority++) {
-        // First process with this priority
         Process p1;
         p1.ID = "P" + to_string(processes.size() + 1);
-        p1.arrivalTime = rand() % 3;
+        p1.arrivalTime = arrivalDist(gen) % 3;
         p1.priority = priority;
-        p1.burstTime = rand() % 5 + 1;
+        p1.burstTime = burstDist(gen);
         processes.push_back(p1);
 
-        // Second process with same priority (if not exceeding n)
         if (processes.size() < n) {
             Process p2;
             p2.ID = "P" + to_string(processes.size() + 1);
-            p2.arrivalTime = p1.arrivalTime + rand() % 2;  // Close arrival
+            p2.arrivalTime = p1.arrivalTime + closeArrival(gen);
             p2.priority = priority;
-            p2.burstTime = rand() % 5 + 1;
+            p2.burstTime = burstDist(gen);
             processes.push_back(p2);
         }
     }
 
-    // Fill remaining slots with random priorities (if n > 6)
     while (processes.size() < n) {
         Process p;
         p.ID = "P" + to_string(processes.size() + 1);
-        p.arrivalTime = rand() % 6;
-        p.priority = rand() % 3 + 1;
-        p.burstTime = rand() % 5 + 1;
+        p.arrivalTime = arrivalDist(gen);
+        p.priority = priorityDist(gen);
+        p.burstTime = burstDist(gen);
         processes.push_back(p);
     }
 
-    // Sort by arrival time for realism
-    sort(processes.begin(), processes.end(),
-        [](const Process& a, const Process& b) {
+    ranges::sort(processes, [](const Process& a, const Process& b) {
         return a.arrivalTime < b.arrivalTime;
     });
-      return processes;
+
+    return processes;
 }
-void PrintProcesses(vector<Process> processes) {
+
+
+inline void PrintProcesses(const vector<Process>& processes) {
     cout << "P\tAr\tPr\tBu\n";
     for (const auto& p : processes) {
         cout << p.ID << "\t" << p.arrivalTime << "\t"
              << p.priority << "\t" << p.burstTime << "\n";
     }
 }
+
 #endif

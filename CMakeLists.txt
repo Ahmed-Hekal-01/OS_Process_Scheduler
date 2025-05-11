@@ -8,4 +8,5 @@ add_executable(
         include/MetricsServices.h
         include/ProcessServices.h
         include/GUI.h
+        include/UnitTests.h
 )

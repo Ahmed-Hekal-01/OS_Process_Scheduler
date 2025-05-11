@@ -1,5 +1,6 @@
 #include "../include/GUI.h"
-
+#include "../include/UnitTests.h"
 int main() {
-    GUI();
+    // TestAvgResponseTime();
+     GUI();
 }
